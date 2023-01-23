@@ -1,0 +1,10 @@
+--localization file for german/Germany
+local _, L = ...;
+if GetLocale() ~= "ptBR" then return end
+
+L["FORM_BEAR"] = "Forma de Urso"
+L["FORM_DIRE_BEAR"] = "Forma de Urso Hediondo"
+L["FORM_CAT"] = "Forma de Felino"
+L["FORM_TRAVEL"] = "Forma de Viagem"
+L["SPELL_CHARGE"] = "Investida Feral"
+L["SPELL_INNERVATE"] = "Avivar"

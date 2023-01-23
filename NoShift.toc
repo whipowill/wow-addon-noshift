@@ -1,0 +1,18 @@
+## Interface: 30400
+## Title: NoShift
+## Version: 1.0.0
+## Author: whipowill
+## Notes: Helper-Functions for creating efficient druid macros
+## DefaultState: enabled
+
+Locale\enUS.lua
+Locale\deDE.lua
+Locale\esES.lua
+Locale\frFR.lua
+Locale\itIT.lua
+Locale\ptBR.lua
+Locale\ruRU.lua
+Locale\koKR.lua
+Locale\zhCN.lua
+
+NoShift.lua
