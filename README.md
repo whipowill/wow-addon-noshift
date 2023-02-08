@@ -14,18 +14,18 @@ There is an internal console variable called ``AutoUnshift`` which governs if th
 /ns energy > 30			<-- if energy is more than 30, set autoshift to 0
 /ns mana < 20			<-- if mana is less than 20, set autoshift to 0
 /ns health < 20			<-- if health is less than 20, set autoshift to 0
-/ns !snare				<-- if snared, set autoshift to 1
+/ns !snare			<-- if snared, set autoshift to 1
 /cast [form:3] !Cat Form
-/ns off					<-- restore default, set autounshift to 1
+/ns off				<-- restore default, set autounshift to 1
 ```
 
 ```
 #showtooltip
 /stopmacro [nocombat]
-/ns on					<-- disable, set autounshift to 0
-/ns !snare				<-- if snared, set autoshift to 1
+/ns on				<-- disable, set autounshift to 0
+/ns !snare			<-- if snared, set autoshift to 1
 /cast [form:1] !Dire Bear Form
-/ns off					<-- restore default, set autounshift to 1
+/ns off				<-- restore default, set autounshift to 1
 ```
 
 ## Notes
