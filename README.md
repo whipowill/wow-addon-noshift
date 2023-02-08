@@ -35,4 +35,4 @@ There is an internal console variable called ``AutoUnshift`` which governs if th
 
 ## History
 
-This addon began as a fork of [DruidMacroHelper](https://github.com/ForsakenNGS/DruidMacroHelper) and became my own complete overhaul.  My version does far less and does it far better inasmuch as I have removed all the laggy logic operations.  This original addon was totally unviable on WOTLK 3.3.5.
+This addon began as a fork of [DruidMacroHelper](https://github.com/ForsakenNGS/DruidMacroHelper) and became my own complete overhaul.  My version does far less and does it far better inasmuch as I have removed all the laggy logic operations.  DMH was totally unviable on WOTLK 3.3.5.
