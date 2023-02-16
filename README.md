@@ -10,7 +10,7 @@ There is an internal console variable called ``AutoUnshift`` which governs if th
 
 ### Powershifting
 
-For using [Wolfshead Helm](https://www.wowhead.com/classic/item=8345/wolfshead-helm) to regenerate energy:
+For shifting from form into the same form, to use [Wolfshead Helm](https://www.wowhead.com/classic/item=8345/wolfshead-helm) or to break snares:
 
 ```
 /stopmacro [mounted] [stealth] [nocombat] [noform]
@@ -19,7 +19,7 @@ For using [Wolfshead Helm](https://www.wowhead.com/classic/item=8345/wolfshead-h
 /cast [form:1] !Dire Bear Form
 /ns off				<-- restore default, set AutoUnshift to 1
 /stopmacro [noform:3]
-/ns energy > 30		<-- if energy is more than 30, set AutoUnshift to 0
+/ns energy > 30			<-- if energy is more than 30, set AutoUnshift to 0
 /ns !snare			<-- if snared, set AutoUnshift to 1
 /cast [form:3] !Cat Form
 /ns off				<-- restore default, set AutoUnshift to 1
@@ -27,17 +27,17 @@ For using [Wolfshead Helm](https://www.wowhead.com/classic/item=8345/wolfshead-h
 
 ### Bearweaving
 
-For shifting into bear while regenerating energy:
+For shifting from cat into bear while regenerating energy:
 
 ```
 /stopmacro [mounted] [stealth] [nocombat] [noform]
-/ns energy < 90		<-- if energy is less than 90, set AutoUnshift to 0
-/ns rage > 10		<-- if rage is more than 10, set AutoUnshift to 0
+/ns energy < 90			<-- if energy is less than 90, set AutoUnshift to 0
+/ns rage > 10			<-- if rage is more than 10, set AutoUnshift to 0
 /ns !snared			<-- if snared, set AutoUnshift to 1
 /cast [form:1] !Cat Form
 /ns off				<-- restore default, set AutoUnshift to 1
 /stopmacro [noform:3]
-/ns energy > 30		<-- if energy is more than 30, set AutoUnshift to 0
+/ns energy > 30			<-- if energy is more than 30, set AutoUnshift to 0
 /ns !snare			<-- if snared, set AutoUnshift to 1
 /cast [form:3] !Dire Bear Form
 /ns off				<-- restore default, set AutoUnshift to 1
