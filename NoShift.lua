@@ -22,6 +22,9 @@ local SHIFTABLE = {
   "Frostfire Bolt",
   "Frost Nova",
 
+  -- Paladins
+  --"Avenger's Shield",
+
   -- Preists
   --"Mind Flay",
 
@@ -41,9 +44,23 @@ local SHIFTABLE = {
   -- Warriors
   --"Piercing Howl",
   "Hamstring",
+  "Thunderclap",
+
+  -- NPCs
+  "Earthgrab",
+  "Howling Screech",
+  "Rush",
 };
 
 NoShift = {};
+
+function NoShift:activate()
+  SetCVar("AutoUnshift", 1);
+end
+
+function NoShift:deactivate()
+  SetCVar("AutoUnshift", 0);
+end
 
 function NoShift:init()
   self:register_slash_command("/ns");
@@ -110,7 +127,7 @@ end
 
 function NoShift:power_check(method, parameters)
   if (self:is_gcd()) then
-    SetCVar("AutoUnshift", 0);
+    self:deactivate();
     return;
   end
 
@@ -138,13 +155,11 @@ function NoShift:power_check(method, parameters)
     local value = tonumber(tremove(parameters, 1));
     if (operator == ">") then
       if (v > value) then
-        self:log_debug("You have too much");
-        SetCVar("AutoUnshift", 0);
+        self:deactivate();
       end
     elseif (operator == "<") then
       if (v < value) then
-        self:log_debug("You don't have enough");
-        SetCVar("AutoUnshift", 0);
+        self:deactivate();
       end
     end
   end
@@ -152,11 +167,11 @@ end
 
 function NoShift:on_slash_snare()
   if (self:is_gcd()) then
-    SetCVar("AutoUnshift", 0);
+    self:deactivate();
     return;
   end
   if (self:is_shiftable_cc()) then
-    SetCVar("AutoUnshift", 1);
+    self:activate();
   end
 end
 

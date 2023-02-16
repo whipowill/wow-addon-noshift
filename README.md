@@ -8,23 +8,38 @@ There is an internal console variable called ``AutoUnshift`` which governs if th
 
 ## Usage
 
+### Powershifting
+
+For using [Wolfshead Helm](https://www.wowhead.com/classic/item=8345/wolfshead-helm) to regenerate energy:
+
 ```
-#showtooltip
-/stopmacro [nocombat]
-/ns energy > 30			<-- if energy is more than 30, set AutoUnshift to 0
-/ns mana < 20			<-- if mana is less than 20, set AutoUnshift to 0
-/ns health < 20			<-- if health is less than 20, set AutoUnshift to 0
+/stopmacro [mounted] [stealth] [nocombat] [noform]
+/ns on 				<-- disable, set AutoUnshift to 0
+/ns !snare			<-- if snared, set AutoUnshift to 1
+/cast [form:1] !Dire Bear Form
+/ns off				<-- restore default, set AutoUnshift to 1
+/stopmacro [noform:3]
+/ns energy > 30		<-- if energy is more than 30, set AutoUnshift to 0
 /ns !snare			<-- if snared, set AutoUnshift to 1
 /cast [form:3] !Cat Form
 /ns off				<-- restore default, set AutoUnshift to 1
 ```
 
+### Bearweaving
+
+For shifting into bear while regenerating energy:
+
 ```
-#showtooltip
-/stopmacro [nocombat]
-/ns on				<-- disable, set AutoUnshift to 0
+/stopmacro [mounted] [stealth] [nocombat] [noform]
+/ns energy < 90		<-- if energy is less than 90, set AutoUnshift to 0
+/ns rage > 10		<-- if rage is more than 10, set AutoUnshift to 0
+/ns !snared			<-- if snared, set AutoUnshift to 1
+/cast [form:1] !Cat Form
+/ns off				<-- restore default, set AutoUnshift to 1
+/stopmacro [noform:3]
+/ns energy > 30		<-- if energy is more than 30, set AutoUnshift to 0
 /ns !snare			<-- if snared, set AutoUnshift to 1
-/cast [form:1] !Dire Bear Form
+/cast [form:3] !Dire Bear Form
 /ns off				<-- restore default, set AutoUnshift to 1
 ```
 
@@ -35,4 +50,4 @@ There is an internal console variable called ``AutoUnshift`` which governs if th
 
 ## History
 
-This addon began as a fork of [DruidMacroHelper](https://github.com/ForsakenNGS/DruidMacroHelper) and became my own complete overhaul.  My version does far less and does it far better inasmuch as I have removed all the laggy logic operations.  DMH was totally unviable on WOTLK 3.3.5.
+This addon began as a fork of [DruidMacroHelper](https://github.com/ForsakenNGS/DruidMacroHelper) and became my own complete overhaul.  My version does far less and does it far better inasmuch as I have removed all the laggy logic operations.  DMH was totally unviable on WOTLK v3.3.5.
