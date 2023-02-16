@@ -10,7 +10,7 @@ There is an internal console variable called ``AutoUnshift`` which governs if th
 
 ### Powershifting
 
-For shifting from form into the same form, to use [Wolfshead Helm](https://www.wowhead.com/classic/item=8345/wolfshead-helm) or to break snares:
+For shifting into same form to use [Wolfshead Helm](https://www.wowhead.com/classic/item=8345/wolfshead-helm) or to break snares:
 
 ```
 /stopmacro [mounted] [stealth] [nocombat] [noform]
