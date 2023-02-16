@@ -33,7 +33,7 @@ For shifting between cat and bear while regenerating energy:
 /stopmacro [mounted] [stealth] [nocombat] [noform]
 /ns energy < 90			<-- if energy is less than 90, set AutoUnshift to 0
 /ns rage > 15			<-- if rage is more than 15, set AutoUnshift to 0
-/ns !snared			<-- if snared, set AutoUnshift to 1
+/ns !snare			<-- if snared, set AutoUnshift to 1
 /cast [form:1] !Cat Form
 /ns off				<-- restore default, set AutoUnshift to 1
 /stopmacro [noform:3]
