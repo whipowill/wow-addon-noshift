@@ -10,7 +10,7 @@ There is an internal console variable called ``AutoUnshift`` which governs if th
 
 ### Powershifting
 
-For shifting into same form to use [Wolfshead Helm](https://www.wowhead.com/classic/item=8345/wolfshead-helm) or to break snares:
+For reshifting into current form to trigger [Wolfshead Helm](https://www.wowhead.com/classic/item=8345/wolfshead-helm) or to break snares:
 
 ```
 /stopmacro [mounted] [stealth] [nocombat] [noform]
@@ -27,7 +27,7 @@ For shifting into same form to use [Wolfshead Helm](https://www.wowhead.com/clas
 
 ### Bearweaving
 
-For shifting from cat into bear while regenerating energy:
+For shifting between cat and bear while regenerating energy:
 
 ```
 /stopmacro [mounted] [stealth] [nocombat] [noform]
