@@ -43,9 +43,9 @@ For shifting between cat and bear while regenerating energy:
 /ns off				<-- restore default, set AutoUnshift to 1
 ```
 
-### Predator's Swiftness
+### Predatory Strikes
 
-For breaking form to use [Predatory Swiftness](https://www.wowhead.com/spell=16974/predatory-swiftness) to self heal:
+For breaking form to use [Predator's Swiftness](https://www.wowhead.com/wotlk/spell=69369/predators-swiftness) to instant self heal:
 
 ```
 /stopmacro [mounted] [stealth] [noform]
