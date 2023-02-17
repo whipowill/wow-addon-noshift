@@ -51,7 +51,7 @@ For breaking form to use [Predatory Swiftness](https://www.wowhead.com/spell=169
 /stopmacro [mounted] [stealth] [noform]
 /ns on 				<-- disable, set AutoUnshift to 0
 /ns !pred 			<-- if procced, set AutoUnshift to 1
-/ns health > 90 	<-- if health is greater than 90%, set AutoUnshift to 0
+/ns health > 90 		<-- if health is greater than 90%, set AutoUnshift to 0
 /cast [@player] Regrowth
 /ns off				<-- restore default, set AutoUnshift to 1
 ```
