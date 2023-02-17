@@ -37,7 +37,7 @@ For shifting between cat and bear while regenerating energy:
 /cast [form:1] !Cat Form
 /ns off				<-- restore default, set AutoUnshift to 1
 /stopmacro [noform:3]
-/ns energy > 30			<-- if energy is more than 30, set AutoUnshift to 0
+/ns energy > 30			<-- if energy is more than 30%, set AutoUnshift to 0
 /ns !snare			<-- if snared, set AutoUnshift to 1
 /cast [form:3] !Dire Bear Form
 /ns off				<-- restore default, set AutoUnshift to 1
@@ -51,7 +51,7 @@ For breaking form to use [Predatory Swiftness](https://www.wowhead.com/spell=169
 /stopmacro [mounted] [stealth] [noform]
 /ns on 				<-- disable, set AutoUnshift to 0
 /ns !pred 			<-- if procced, set AutoUnshift to 1
-/ns health > 90 		<-- if health is greater than 90%, set AutoUnshift to 0
+/ns health > 90 		<-- if health is more than 90%, set AutoUnshift to 0
 /cast [@player] Regrowth
 /ns off				<-- restore default, set AutoUnshift to 1
 ```
