@@ -50,6 +50,7 @@ local SHIFTABLE = {
   "Earthgrab",
   "Howling Screech",
   "Rush",
+  "Net",
 };
 
 NoShift = {};
@@ -72,6 +73,7 @@ function NoShift:init()
   self:register_slash_action('energy', 'on_slash_energy', '|cffffff00<> <value>|r Disable AutoUnshift if energy is above/below value');
   --self:register_slash_action('combo', 'on_slash_combo', '|cffffff00<> <value>|r Disable AutoUnshift if combo points is above/below value');
   self:register_slash_action('!snare', 'on_slash_snare', 'Disable AutoUnshift if slowed or snared');
+  self:register_slash_action('!pred', 'on_slash_pred', 'Disable AutoUnshift if missing Predator\'s Swiftness');
   self:register_slash_action('on', 'on_slash_on', 'Set AutoUnshift to 0');
   self:register_slash_action('off', 'on_slash_off', 'Reset AutoUnshift back to normal');
   self:register_slash_action('debug', 'on_slash_debug', 'Enable or disable debugging output');
@@ -175,6 +177,38 @@ function NoShift:on_slash_snare()
   end
 end
 
+function NoShift:on_slash_pred()
+  if (self:is_gcd()) then
+    self:deactivate();
+    return;
+  end
+  check = UnitBuff("player", "Predator's Swiftness");
+  if (check) then
+    self:activate();
+  end
+end
+
+function NoShift:is_gcd()
+  if (GetSpellCooldown(768) > 0) then
+    return true;
+  end
+
+  return false;
+end
+
+function NoShift:is_shiftable_cc()
+  local check;
+
+  for debuff = 1, #SHIFTABLE do
+    check = UnitDebuff("player", SHIFTABLE[debuff]);
+    if (check) then
+      return true;
+    end
+  end
+
+  return false;
+end
+
 function NoShift:on_slash_health(parameters)
   self:power_check("health", parameters);
 end
@@ -201,27 +235,6 @@ end
 
 function NoShift:on_slash_off(parameters)
   SetCVar("AutoUnshift", 1);
-end
-
-function NoShift:is_gcd()
-  if (GetSpellCooldown(768) > 0) then
-    return true;
-  end
-
-  return false;
-end
-
-function NoShift:is_shiftable_cc()
-  local check;
-
-  for debuff = 1, #SHIFTABLE do
-    check = UnitDebuff("player", SHIFTABLE[debuff]);
-    if (check) then
-      return true;
-    end
-  end
-
-  return false;
 end
 
 function NoShift:on_slash_debug(parameters)

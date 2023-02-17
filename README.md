@@ -19,7 +19,7 @@ For reshifting into current form to trigger [Wolfshead Helm](https://www.wowhead
 /cast [form:1] !Dire Bear Form
 /ns off				<-- restore default, set AutoUnshift to 1
 /stopmacro [noform:3]
-/ns energy > 30			<-- if energy is more than 30, set AutoUnshift to 0
+/ns energy > 30			<-- if energy is more than 30%, set AutoUnshift to 0
 /ns !snare			<-- if snared, set AutoUnshift to 1
 /cast [form:3] !Cat Form
 /ns off				<-- restore default, set AutoUnshift to 1
@@ -31,8 +31,8 @@ For shifting between cat and bear while regenerating energy:
 
 ```
 /stopmacro [mounted] [stealth] [nocombat] [noform]
-/ns energy < 90			<-- if energy is less than 90, set AutoUnshift to 0
-/ns rage > 15			<-- if rage is more than 15, set AutoUnshift to 0
+/ns energy < 90			<-- if energy is less than 90%, set AutoUnshift to 0
+/ns rage > 15			<-- if rage is more than 15%, set AutoUnshift to 0
 /ns !snare			<-- if snared, set AutoUnshift to 1
 /cast [form:1] !Cat Form
 /ns off				<-- restore default, set AutoUnshift to 1
@@ -40,6 +40,19 @@ For shifting between cat and bear while regenerating energy:
 /ns energy > 30			<-- if energy is more than 30, set AutoUnshift to 0
 /ns !snare			<-- if snared, set AutoUnshift to 1
 /cast [form:3] !Dire Bear Form
+/ns off				<-- restore default, set AutoUnshift to 1
+```
+
+### Predator's Swiftness
+
+For breaking form to use [Predatory Swiftness](https://www.wowhead.com/spell=16974/predatory-swiftness) to self heal:
+
+```
+/stopmacro [mounted] [stealth] [noform]
+/ns on 				<-- disable, set AutoUnshift to 0
+/ns !pred 			<-- if procced, set AutoUnshift to 1
+/ns health > 90 	<-- if health is greater than 90%, set AutoUnshift to 0
+/cast [@player] Regrowth
 /ns off				<-- restore default, set AutoUnshift to 1
 ```
 
