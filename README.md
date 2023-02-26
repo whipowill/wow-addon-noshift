@@ -64,3 +64,7 @@ For breaking form to use [Predator's Swiftness](https://www.wowhead.com/wotlk/sp
 ## History
 
 This addon began as a fork of [DruidMacroHelper](https://github.com/ForsakenNGS/DruidMacroHelper) and became my own complete overhaul.  My version does far less and does it far better inasmuch as I have removed all the laggy logic operations.  DMH was totally unviable on WOTLK v3.3.5.
+
+## Credits
+
+- Special thanks to [LoseControl](https://wotlkaddons.com/addon/losecontrol) for the list of shiftable debuffs.

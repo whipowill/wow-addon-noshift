@@ -1,57 +1,88 @@
 local _, L = ...;
 
 -- https://wowpedia.fandom.com/wiki/Snare
-local SHIFTABLE = {
+local SPELLIDS = {
   -- Death Knights
-  "Chains of Ice",
+  45524,  -- Chains of Ice
+  55666,  -- Desecration (no duration, lasts as long as you stand in it)
+  58617,  -- Glyph of Heart Strike
+  50436,  -- Icy Clutch (Chilblains)
 
   -- Druids
-  "Entangling Roots",
-  --"Infected Wounds",
+  339, -- Entangling Roots
+  19675, -- Feral Charge Effect (immobilize with interrupt [spell lockout, not silence])
+  58179,  -- Infected Wounds
+  61391,  -- Typhoon
 
   -- Hunters
-  --"Concussive Shot",
-  --"Ice Trap",
+  19306, -- Counterattack
+  19185, -- Entrapment
+  35101,  -- Concussive Barrage
+  5116,  -- Concussive Shot
+  13810,  -- Frost Trap Aura (no duration, lasts as long as you stand in it)
+  61394,  -- Glyph of Freezing Trap
+  2974,  -- Wing Clip
+  54644,  -- Froststorm Breath (Chimera)
+  50245, -- Pin (Crab)
+  50271,  -- Tendon Rip (Hyena)
+  54706, -- Venom Web Spray (Silithid)
+  4167, -- Web (Spider)
 
   -- Mages
-  "Blast Wave",
-  "Frostbolt",
-  "Chilled",
-  "Slow",
-  "Cone of Cold",
-  "Frostfire Bolt",
-  "Frost Nova",
+  33395, -- Freeze (Water Elemental)
+  122, -- Frost Nova
+  11071, -- Frostbite
+  55080, -- Shattered Barrier
+  11113,  -- Blast Wave
+  6136,  -- Chilled (generic effect, used by lots of spells [looks weird on Improved Blizzard, might want to comment out])
+  120,  -- Cone of Cold
+  116,  -- Frostbolt
+  47610,  -- Frostfire Bolt
+  31589,  -- Slow
 
   -- Paladins
-  --"Avenger's Shield",
+  --20184,  -- Judgement of Justice (100% movement snare; druids and shamans might want this though)
 
   -- Preists
-  --"Mind Flay",
+  --15407,  -- Mind Flay
 
   -- Rogues
-  "Deadly Throw",
-  "Crippling Poison",
+  31125,  -- Blade Twisting
+  3409,  -- Crippling Poison
+  26679,  -- Deadly Throw
 
   -- Shamans
-  --"Frost Shock",
-  --"Frostbrand Weapon", -- ??? don't know name of debuff
-  "Earthbind",
+  64695, -- Earthgrab (Storm, Earth and Fire)
+  63685, -- Freeze (Frozen Power)
+  3600,  -- Earthbind (5 second duration per pulse, but will keep re-applying the debuff as long as you stand within the pulse radius)
+  8056,  -- Frost Shock
+  8034,  -- Frostbrand Attack
 
   -- Warlocks
-  "Curse of Exhaustion",
-  --"Demonic Breath",
+  18118,  -- Aftermath
+  18223,  -- Curse of Exhaustion
 
   -- Warriors
-  --"Piercing Howl",
-  "Hamstring",
-  "Thunderclap",
+  58373, -- Glyph of Hamstring
+  23694, -- Improved Hamstring
+  1715,  -- Hamstring
+  12323,  -- Piercing Howl
+  63757, -- Thunderclap (not in LoseControl?)
 
   -- NPCs
-  "Earthgrab",
-  "Howling Screech",
-  "Rush",
-  "Net",
+  39965, -- Frost Grenade
+  55536, -- Frostweave Net
+  13099, -- Net-o-Matic
+  29703,  -- Dazed
 };
+
+local SHIFTABLE = {};
+for i = 1, #SPELLIDS do
+  local name = GetSpellInfo(SPELLIDS[i]);
+  if (name) then
+    SHIFTABLE[i] = name;
+  end
+end
 
 NoShift = {};
 
