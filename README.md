@@ -58,7 +58,6 @@ For breaking form to use [Predator's Swiftness](https://www.wowhead.com/wotlk/sp
 
 ## Notes
 
-- The list of debuffs that are shiftable is not perfect, just the ones I've found so far.
 - The addon will never process any conditions during a GCD bc it's a waste of time.
 
 ## History
