@@ -1,86 +1,172 @@
 local _, L = ...;
 
--- https://wowpedia.fandom.com/wiki/Snare
-local SPELLIDS = {
-  -- Death Knights
-  45524,  -- Chains of Ice
-  55666,  -- Desecration (no duration, lasts as long as you stand in it)
-  58617,  -- Glyph of Heart Strike
-  50436,  -- Icy Clutch (Chilblains)
-
-  -- Druids
-  339, -- Entangling Roots
-  19675, -- Feral Charge Effect (immobilize with interrupt [spell lockout, not silence])
-  58179,  -- Infected Wounds
-  61391,  -- Typhoon
-
-  -- Hunters
-  19306, -- Counterattack
-  19185, -- Entrapment
-  35101,  -- Concussive Barrage
-  5116,  -- Concussive Shot
-  13810,  -- Frost Trap Aura (no duration, lasts as long as you stand in it)
-  61394,  -- Glyph of Freezing Trap
-  2974,  -- Wing Clip
-  54644,  -- Froststorm Breath (Chimera)
-  50245, -- Pin (Crab)
-  50271,  -- Tendon Rip (Hyena)
-  54706, -- Venom Web Spray (Silithid)
-  4167, -- Web (Spider)
-
-  -- Mages
-  33395, -- Freeze (Water Elemental)
-  122, -- Frost Nova
-  11071, -- Frostbite
-  55080, -- Shattered Barrier
-  11113,  -- Blast Wave
-  6136,  -- Chilled (generic effect, used by lots of spells [looks weird on Improved Blizzard, might want to comment out])
-  120,  -- Cone of Cold
-  116,  -- Frostbolt
-  47610,  -- Frostfire Bolt
-  31589,  -- Slow
-
-  -- Paladins
-  --20184,  -- Judgement of Justice (100% movement snare; druids and shamans might want this though)
-
-  -- Preists
-  --15407,  -- Mind Flay
-
-  -- Rogues
-  31125,  -- Blade Twisting
-  3409,  -- Crippling Poison
-  26679,  -- Deadly Throw
-
-  -- Shamans
-  64695, -- Earthgrab (Storm, Earth and Fire)
-  63685, -- Freeze (Frozen Power)
-  3600,  -- Earthbind (5 second duration per pulse, but will keep re-applying the debuff as long as you stand within the pulse radius)
-  8056,  -- Frost Shock
-  8034,  -- Frostbrand Attack
-
-  -- Warlocks
-  18118,  -- Aftermath
-  18223,  -- Curse of Exhaustion
-
-  -- Warriors
-  58373, -- Glyph of Hamstring
-  23694, -- Improved Hamstring
-  1715,  -- Hamstring
-  12323,  -- Piercing Howl
-  63757, -- Thunderclap (not in LoseControl?)
-
-  -- NPCs
-  39965, -- Frost Grenade
-  55536, -- Frostweave Net
-  13099, -- Net-o-Matic
-  29703,  -- Dazed
+local HOTS = {
+  "Rejuvenation",
 };
 
-local SHIFTABLE = {};
-for i = 1, #SPELLIDS do
-  local name = GetSpellInfo(SPELLIDS[i]);
+-- From LoseControl (https://wotlkaddons.com/addon/losecontrol)
+local SPELLS = {
+  -- Death Knight
+  [47481] = "CC",   -- Gnaw (Ghoul)
+  [51209] = "CC",   -- Hungering Cold
+  [47476] = "Silence",  -- Strangulate
+  [45524] = "Snare",  -- Chains of Ice
+  [55666] = "Snare",  -- Desecration (no duration, lasts as long as you stand in it)
+  [58617] = "Snare",  -- Glyph of Heart Strike
+  [50436] = "Snare",  -- Icy Clutch (Chilblains)
+  -- Druid
+  [5211]  = "CC",   -- Bash (also Shaman Spirit Wolf ability)
+  [33786] = "CC",   -- Cyclone
+  [2637]  = "CC",   -- Hibernate (works against Druids in most forms and Shamans using Ghost Wolf)
+  [22570] = "CC",   -- Maim
+  [9005]  = "CC",   -- Pounce
+  [339]   = "Root", -- Entangling Roots
+  [19675] = "Root", -- Feral Charge Effect (immobilize with interrupt [spell lockout, not silence])
+  [58179] = "Snare",  -- Infected Wounds
+  [61391] = "Snare",  -- Typhoon
+  -- Hunter
+  [60210] = "CC",   -- Freezing Arrow Effect
+  [3355]  = "CC",   -- Freezing Trap Effect
+  [24394] = "CC",   -- Intimidation
+  [1513]  = "CC",   -- Scare Beast (works against Druids in most forms and Shamans using Ghost Wolf)
+  [19503] = "CC",   -- Scatter Shot
+  [19386] = "CC",   -- Wyvern Sting
+  [34490] = "Silence",  -- Silencing Shot
+  [53359] = "Disarm", -- Chimera Shot - Scorpid
+  [19306] = "Root", -- Counterattack
+  [19185] = "Root", -- Entrapment
+  [35101] = "Snare",  -- Concussive Barrage
+  [5116]  = "Snare",  -- Concussive Shot
+  [13810] = "Snare",  -- Frost Trap Aura (no duration, lasts as long as you stand in it)
+  [61394] = "Snare",  -- Glyph of Freezing Trap
+  [2974]  = "Snare",  -- Wing Clip
+  -- Hunter Pets
+  [50519] = "CC",   -- Sonic Blast (Bat)
+  [50541] = "Disarm", -- Snatch (Bird of Prey)
+  [54644] = "Snare",  -- Froststorm Breath (Chimera)
+  [50245] = "Root", -- Pin (Crab)
+  [50271] = "Snare",  -- Tendon Rip (Hyena)
+  [50518] = "CC",   -- Ravage (Ravager)
+  [54706] = "Root", -- Venom Web Spray (Silithid)
+  [4167]  = "Root", -- Web (Spider)
+  -- Mage
+  [44572] = "CC",   -- Deep Freeze
+  [31661] = "CC",   -- Dragon's Breath
+  [12355] = "CC",   -- Impact
+  [118]   = "CC",   -- Polymorph
+  [18469] = "Silence",  -- Silenced - Improved Counterspell
+  [64346] = "Disarm", -- Fiery Payback
+  [33395] = "Root", -- Freeze (Water Elemental)
+  [122]   = "Root", -- Frost Nova
+  [11071] = "Root", -- Frostbite
+  [55080] = "Root", -- Shattered Barrier
+  [11113] = "Snare",  -- Blast Wave
+  [6136]  = "Snare",  -- Chilled (generic effect, used by lots of spells [looks weird on Improved Blizzard, might want to comment out])
+  [120]   = "Snare",  -- Cone of Cold
+  [116]   = "Snare",  -- Frostbolt
+  [47610] = "Snare",  -- Frostfire Bolt
+  [31589] = "Snare",  -- Slow
+  -- Paladin
+  [853]   = "CC",   -- Hammer of Justice
+  [2812]  = "CC",   -- Holy Wrath (works against Warlocks using Metamorphasis and Death Knights using Lichborne)
+  [20066] = "CC",   -- Repentance
+  [20170] = "CC",   -- Stun (Seal of Justice proc)
+  [10326] = "CC",   -- Turn Evil (works against Warlocks using Metamorphasis and Death Knights using Lichborne)
+  [63529] = "Silence",  -- Shield of the Templar
+  [20184] = "Snare",  -- Judgement of Justice (100% movement snare; druids and shamans might want this though)
+  -- Priest
+  [605]   = "CC",   -- Mind Control
+  [64044] = "CC",   -- Psychic Horror
+  [8122]  = "CC",   -- Psychic Scream
+  [9484]  = "CC",   -- Shackle Undead (works against Death Knights using Lichborne)
+  [15487] = "Silence",  -- Silence
+  --[64058] = "Disarm", -- Psychic Horror (duplicate debuff names not allowed atm, need to figure out how to support this later)
+  [15407] = "Snare",  -- Mind Flay
+  -- Rogue
+  [2094]  = "CC",   -- Blind
+  [1833]  = "CC",   -- Cheap Shot
+  [1776]  = "CC",   -- Gouge
+  [408]   = "CC",   -- Kidney Shot
+  [6770]  = "CC",   -- Sap
+  [1330]  = "Silence",  -- Garrote - Silence
+  [18425] = "Silence",  -- Silenced - Improved Kick
+  [51722] = "Disarm", -- Dismantle
+  [31125] = "Snare",  -- Blade Twisting
+  [3409]  = "Snare",  -- Crippling Poison
+  [26679] = "Snare",  -- Deadly Throw
+  -- Shaman
+  [39796] = "CC",   -- Stoneclaw Stun
+  [51514] = "CC",   -- Hex (although effectively a silence+disarm effect, it is conventionally thought of as a "CC", plus you can trinket out of it)
+  [64695] = "Root", -- Earthgrab (Storm, Earth and Fire)
+  [63685] = "Root", -- Freeze (Frozen Power)
+  [3600]  = "Snare",  -- Earthbind (5 second duration per pulse, but will keep re-applying the debuff as long as you stand within the pulse radius)
+  [8056]  = "Snare",  -- Frost Shock
+  [8034]  = "Snare",  -- Frostbrand Attack
+  -- Warlock
+  [710]   = "CC",   -- Banish (works against Warlocks using Metamorphasis and Druids using Tree Form)
+  [6789]  = "CC",   -- Death Coil
+  [5782]  = "CC",   -- Fear
+  [5484]  = "CC",   -- Howl of Terror
+  [6358]  = "CC",   -- Seduction (Succubus)
+  [30283] = "CC",   -- Shadowfury
+  [24259] = "Silence",  -- Spell Lock (Felhunter)
+  [18118] = "Snare",  -- Aftermath
+  [18223] = "Snare",  -- Curse of Exhaustion
+  -- Warrior
+  [7922]  = "CC",   -- Charge Stun
+  [12809] = "CC",   -- Concussion Blow
+  [20253] = "CC",   -- Intercept (also Warlock Felguard ability)
+  [5246]  = "CC",   -- Intimidating Shout
+  [12798] = "CC",   -- Revenge Stun
+  [46968] = "CC",   -- Shockwave
+  [18498] = "Silence",  -- Silenced - Gag Order
+  [676]   = "Disarm", -- Disarm
+  [58373] = "Root", -- Glyph of Hamstring
+  [23694] = "Root", -- Improved Hamstring
+  [1715]  = "Snare",  -- Hamstring
+  [12323] = "Snare",  -- Piercing Howl
+  [63757] = "Snare", -- Thunderclap (added by whipowill)
+  -- Other
+  [30217] = "CC",   -- Adamantite Grenade
+  [67769] = "CC",   -- Cobalt Frag Bomb
+  [30216] = "CC",   -- Fel Iron Bomb
+  [20549] = "CC",   -- War Stomp
+  [25046] = "Silence",  -- Arcane Torrent
+  [39965] = "Root", -- Frost Grenade
+  [55536] = "Root", -- Frostweave Net
+  [13099] = "Root", -- Net-o-Matic
+  [29703] = "Snare",  -- Dazed
+  -- Immunities
+  [46924] = "Immune", -- Bladestorm (Warrior)
+  [642]   = "Immune", -- Divine Shield (Paladin)
+  [45438] = "Immune", -- Ice Block (Mage)
+  [34692] = "Immune", -- The Beast Within (Hunter)
+  -- PvE
+  [28169] = "PvE",  -- Mutating Injection (Grobbulus)
+  [28059] = "PvE",  -- Positive Charge (Thaddius)
+  [28084] = "PvE",  -- Negative Charge (Thaddius)
+  [27819] = "PvE",  -- Detonate Mana (Kel'Thuzad)
+  [63024] = "PvE",  -- Gravity Bomb (XT-002 Deconstructor)
+  [63018] = "PvE",  -- Light Bomb (XT-002 Deconstructor)
+  [62589] = "PvE",  -- Nature's Fury (Freya, via Ancient Conservator)
+  [63276] = "PvE",  -- Mark of the Faceless (General Vezax)
+  [66770] = "PvE",  -- Ferocious Butt (Icehowl)
+};
+
+local STUNS = {};
+local SNARES = {};
+local i = 1;
+local j = 1;
+for k, v in pairs(SPELLS) do
+  local name = GetSpellInfo(k);
   if (name) then
-    SHIFTABLE[i] = name;
+    if (v == "Snare" or v == "Root") then
+      SNARES[i] = name;
+      i=i+1;
+    elseif (v == "CC") then
+      STUNS[j] = name;
+      j=j+1;
+    end
   end
 end
 
@@ -103,8 +189,10 @@ function NoShift:init()
   --self:register_slash_action('focus', 'on_slash_focus', '|cffffff00<> <value>|r Disable AutoUnshift if focus is above/below value');
   self:register_slash_action('energy', 'on_slash_energy', '|cffffff00<> <value>|r Disable AutoUnshift if energy is above/below value');
   --self:register_slash_action('combo', 'on_slash_combo', '|cffffff00<> <value>|r Disable AutoUnshift if combo points is above/below value');
-  self:register_slash_action('!snare', 'on_slash_snare', 'Disable AutoUnshift if slowed or snared');
-  self:register_slash_action('!pred', 'on_slash_pred', 'Disable AutoUnshift if missing Predator\'s Swiftness');
+  self:register_slash_action('!snare', 'on_slash_snare', 'Enable AutoUnshift if snared (and not stunned)');
+  self:register_slash_action('!pred', 'on_slash_pred', 'Enable AutoUnshift if Predator\'s Swiftness has procced');
+  self:register_slash_action('!int', 'on_slash_int', 'Enable AutoUnshift if enemy is casting');
+  --self:register_slash_action('!hot', 'on_slash_hot', 'Enable AutoUnshift if you are missing Rejuvenation');
   self:register_slash_action('on', 'on_slash_on', 'Set AutoUnshift to 0');
   self:register_slash_action('off', 'on_slash_off', 'Reset AutoUnshift back to normal');
   self:register_slash_action('debug', 'on_slash_debug', 'Enable or disable debugging output');
@@ -203,8 +291,19 @@ function NoShift:on_slash_snare()
     self:deactivate();
     return;
   end
-  if (self:is_shiftable_cc()) then
-    self:activate();
+  for i = 1, #STUNS do
+    local check = UnitDebuff("player", STUNS[i]);
+    if (check) then
+      self:deactivate();
+      return; -- do not attempt to break form when stunned
+    end
+  end
+  for i = 1, #SNARES do
+    local check = UnitDebuff("player", SNARES[i]);
+    if (check) then
+      self:activate();
+      return;
+    end
   end
 end
 
@@ -213,28 +312,41 @@ function NoShift:on_slash_pred()
     self:deactivate();
     return;
   end
-  check = UnitBuff("player", "Predator's Swiftness");
+  local check = UnitBuff("player", "Predator's Swiftness");
   if (check) then
     self:activate();
+  end
+end
+
+function NoShift:on_slash_int()
+  if (self:is_gcd()) then
+    self:deactivate();
+    return;
+  end
+  --local spell, _, _, _, _, _, _, _, is_interruptable = UnitCastingInfo("target"); <-- no worky?
+  local check = UnitCastingInfo("target");
+  if (check) then
+    self:activate();
+  end
+end
+
+function NoShift:on_slash_hot()
+  if (self:is_gcd()) then
+    self:deactivate();
+    return;
+  end
+
+  for i = 1, #HOTS do
+    local check = UnitDebuff("player", HOTS[i]);
+    if (check == nil) then
+      self:activate();
+    end
   end
 end
 
 function NoShift:is_gcd()
   if (GetSpellCooldown(768) > 0) then
     return true;
-  end
-
-  return false;
-end
-
-function NoShift:is_shiftable_cc()
-  local check;
-
-  for debuff = 1, #SHIFTABLE do
-    check = UnitDebuff("player", SHIFTABLE[debuff]);
-    if (check) then
-      return true;
-    end
   end
 
   return false;

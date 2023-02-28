@@ -58,7 +58,8 @@ For breaking form to use [Predator's Swiftness](https://www.wowhead.com/wotlk/sp
 
 ## Notes
 
-- The addon will never process any conditions during a GCD bc it's a waste of time.
+- The addon will never allow shifting during a GCD.
+- The addon will never allow shifting while stunned.
 
 ## History
 
