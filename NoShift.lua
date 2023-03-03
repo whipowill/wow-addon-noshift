@@ -73,15 +73,15 @@ local SPELLS = {
   [20170] = "CC",   -- Stun (Seal of Justice proc)
   [10326] = "CC",   -- Turn Evil (works against Warlocks using Metamorphasis and Death Knights using Lichborne)
   [63529] = "Silence",  -- Shield of the Templar
-  [20184] = "Snare",  -- Judgement of Justice (100% movement snare; druids and shamans might want this though)
+  --[20184] = "Snare",  -- Judgement of Justice (unshiftable, commented out by whipowill)
   -- Priest
   [605]   = "CC",   -- Mind Control
   [64044] = "CC",   -- Psychic Horror
   [8122]  = "CC",   -- Psychic Scream
-  [9484]  = "CC",   -- Shackle Undead (works against Death Knights using Lichborne)
+  [9484]  = "CC",   -- Shackle Undead
   [15487] = "Silence",  -- Silence
-  --[64058] = "Disarm", -- Psychic Horror (duplicate debuff names not allowed atm, need to figure out how to support this later)
-  [15407] = "Snare",  -- Mind Flay
+  --[64058] = "Disarm", -- Psychic Horror
+  --[15407] = "Snare",  -- Mind Flay (unshiftable, commented out by whipowill)
   -- Rogue
   [2094]  = "CC",   -- Blind
   [1833]  = "CC",   -- Cheap Shot
@@ -96,14 +96,14 @@ local SPELLS = {
   [26679] = "Snare",  -- Deadly Throw
   -- Shaman
   [39796] = "CC",   -- Stoneclaw Stun
-  [51514] = "CC",   -- Hex (although effectively a silence+disarm effect, it is conventionally thought of as a "CC", plus you can trinket out of it)
-  [64695] = "Root", -- Earthgrab (Storm, Earth and Fire)
-  [63685] = "Root", -- Freeze (Frozen Power)
-  [3600]  = "Snare",  -- Earthbind (5 second duration per pulse, but will keep re-applying the debuff as long as you stand within the pulse radius)
+  [51514] = "CC",   -- Hex
+  [64695] = "Root", -- Earthgrab
+  [63685] = "Root", -- Freeze
+  [3600]  = "Snare",  -- Earthbind
   [8056]  = "Snare",  -- Frost Shock
   [8034]  = "Snare",  -- Frostbrand Attack
   -- Warlock
-  [710]   = "CC",   -- Banish (works against Warlocks using Metamorphasis and Druids using Tree Form)
+  [710]   = "CC",   -- Banish
   [6789]  = "CC",   -- Death Coil
   [5782]  = "CC",   -- Fear
   [5484]  = "CC",   -- Howl of Terror
@@ -135,6 +135,7 @@ local SPELLS = {
   [39965] = "Root", -- Frost Grenade
   [55536] = "Root", -- Frostweave Net
   [13099] = "Root", -- Net-o-Matic
+  [15609] = "Root", -- Hooked Net (added by whipowill)
   [29703] = "Snare",  -- Dazed
   -- Immunities
   [46924] = "Immune", -- Bladestorm (Warrior)
@@ -151,6 +152,7 @@ local SPELLS = {
   [62589] = "PvE",  -- Nature's Fury (Freya, via Ancient Conservator)
   [63276] = "PvE",  -- Mark of the Faceless (General Vezax)
   [66770] = "PvE",  -- Ferocious Butt (Icehowl)
+
 };
 
 local STUNS = {};
@@ -247,7 +249,7 @@ function NoShift:on_slash_help(parameters)
 end
 
 function NoShift:power_check(method, parameters)
-  if (self:is_gcd()) then
+  if (self:is_gcd() or self:is_stunned()) then
     self:deactivate();
     return;
   end
@@ -286,29 +288,39 @@ function NoShift:power_check(method, parameters)
   end
 end
 
-function NoShift:on_slash_snare()
-  if (self:is_gcd()) then
-    self:deactivate();
-    return;
-  end
+function NoShift:is_stunned()
   for i = 1, #STUNS do
     local check = UnitDebuff("player", STUNS[i]);
     if (check) then
-      self:deactivate();
-      return; -- do not attempt to break form when stunned
+      return true; -- do not attempt to break form when stunned
     end
   end
+  return false;
+end
+
+function NoShift:is_snared()
   for i = 1, #SNARES do
     local check = UnitDebuff("player", SNARES[i]);
     if (check) then
-      self:activate();
-      return;
+      return true;
     end
+  end
+  return false;
+end
+
+function NoShift:on_slash_snare()
+  if (self:is_gcd() or self:is_stunned()) then
+    self:deactivate();
+    return;
+  end
+  if (self:is_snared()) then
+    self:activate();
+    return;
   end
 end
 
 function NoShift:on_slash_pred()
-  if (self:is_gcd()) then
+  if (self:is_gcd() or self:is_stunned()) then
     self:deactivate();
     return;
   end
@@ -319,7 +331,7 @@ function NoShift:on_slash_pred()
 end
 
 function NoShift:on_slash_int()
-  if (self:is_gcd()) then
+  if (self:is_gcd() or self:is_stunned()) then
     self:deactivate();
     return;
   end
@@ -331,11 +343,10 @@ function NoShift:on_slash_int()
 end
 
 function NoShift:on_slash_hot()
-  if (self:is_gcd()) then
+  if (self:is_gcd() or self:is_stunned()) then
     self:deactivate();
     return;
   end
-
   for i = 1, #HOTS do
     local check = UnitDebuff("player", HOTS[i]);
     if (check == nil) then
@@ -348,7 +359,6 @@ function NoShift:is_gcd()
   if (GetSpellCooldown(768) > 0) then
     return true;
   end
-
   return false;
 end
 
