@@ -61,17 +61,17 @@ local SPELLS = {
   [11071] = "Root", -- Frostbite
   [55080] = "Root", -- Shattered Barrier
   [11113] = "Snare",  -- Blast Wave
-  [6136]  = "Snare",  -- Chilled (generic effect, used by lots of spells [looks weird on Improved Blizzard, might want to comment out])
+  [6136]  = "Snare",  -- Chilled
   [120]   = "Snare",  -- Cone of Cold
   [116]   = "Snare",  -- Frostbolt
   [47610] = "Snare",  -- Frostfire Bolt
   [31589] = "Snare",  -- Slow
   -- Paladin
   [853]   = "CC",   -- Hammer of Justice
-  [2812]  = "CC",   -- Holy Wrath (works against Warlocks using Metamorphasis and Death Knights using Lichborne)
+  [2812]  = "CC",   -- Holy Wrath
   [20066] = "CC",   -- Repentance
   [20170] = "CC",   -- Stun (Seal of Justice proc)
-  [10326] = "CC",   -- Turn Evil (works against Warlocks using Metamorphasis and Death Knights using Lichborne)
+  [10326] = "CC",   -- Turn Evil
   [63529] = "Silence",  -- Shield of the Templar
   --[20184] = "Snare",  -- Judgement of Justice (unshiftable, commented out by whipowill)
   -- Priest
@@ -142,17 +142,6 @@ local SPELLS = {
   [642]   = "Immune", -- Divine Shield (Paladin)
   [45438] = "Immune", -- Ice Block (Mage)
   [34692] = "Immune", -- The Beast Within (Hunter)
-  -- PvE
-  [28169] = "PvE",  -- Mutating Injection (Grobbulus)
-  [28059] = "PvE",  -- Positive Charge (Thaddius)
-  [28084] = "PvE",  -- Negative Charge (Thaddius)
-  [27819] = "PvE",  -- Detonate Mana (Kel'Thuzad)
-  [63024] = "PvE",  -- Gravity Bomb (XT-002 Deconstructor)
-  [63018] = "PvE",  -- Light Bomb (XT-002 Deconstructor)
-  [62589] = "PvE",  -- Nature's Fury (Freya, via Ancient Conservator)
-  [63276] = "PvE",  -- Mark of the Faceless (General Vezax)
-  [66770] = "PvE",  -- Ferocious Butt (Icehowl)
-
 };
 
 local STUNS = {};
@@ -217,7 +206,7 @@ function NoShift:on_slash_command(parameters)
     return;
   end
 
-  self:log_debug("Slash command called: ", unpack(parameters));
+  --self:log_debug("Slash command called: ", unpack(parameters));
 
   local action = tremove(parameters, 1);
   if not self.slash_actions[action] then
@@ -292,6 +281,7 @@ function NoShift:is_stunned()
   for i = 1, #STUNS do
     local check = UnitDebuff("player", STUNS[i]);
     if (check) then
+      self:log_debug("Refused to shift bc of "..STUNS[i]);
       return true; -- do not attempt to break form when stunned
     end
   end
@@ -302,6 +292,7 @@ function NoShift:is_snared()
   for i = 1, #SNARES do
     local check = UnitDebuff("player", SNARES[i]);
     if (check) then
+      self:log_debug("Shifting out of "..STUNS[i]);
       return true;
     end
   end
