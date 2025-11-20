@@ -174,18 +174,18 @@ end
 function NoShift:init()
   self:register_slash_command("/ns");
   self:register_slash_action('help', 'on_slash_help', 'Show list of slash actions (or description for the given action)');
-  self:register_slash_action('health', 'on_slash_health', '|cffffff00<> <value>|r Disable AutoUnshift if health is above/below value');
-  self:register_slash_action('mana', 'on_slash_mana', '|cffffff00<> <value>|r Disable AutoUnshift if mana is above/below value');
-  self:register_slash_action('rage', 'on_slash_rage', '|cffffff00<> <value>|r Disable AutoUnshift if rage is above/below value');
-  --self:register_slash_action('focus', 'on_slash_focus', '|cffffff00<> <value>|r Disable AutoUnshift if focus is above/below value');
-  self:register_slash_action('energy', 'on_slash_energy', '|cffffff00<> <value>|r Disable AutoUnshift if energy is above/below value');
-  --self:register_slash_action('combo', 'on_slash_combo', '|cffffff00<> <value>|r Disable AutoUnshift if combo points is above/below value');
-  self:register_slash_action('!snare', 'on_slash_snare', 'Enable AutoUnshift if snared (and not stunned)');
-  self:register_slash_action('!pred', 'on_slash_pred', 'Enable AutoUnshift if Predator\'s Swiftness has procced');
-  self:register_slash_action('!int', 'on_slash_int', 'Enable AutoUnshift if enemy is casting');
-  --self:register_slash_action('!hot', 'on_slash_hot', 'Enable AutoUnshift if you are missing Rejuvenation');
-  self:register_slash_action('on', 'on_slash_on', 'Set AutoUnshift to 0');
-  self:register_slash_action('off', 'on_slash_off', 'Reset AutoUnshift back to normal');
+  self:register_slash_action('health', 'on_slash_health', '|cffffff00<> <value>|r Disable shifting if health is above/below value');
+  self:register_slash_action('mana', 'on_slash_mana', '|cffffff00<> <value>|r Disable shifting if mana is above/below value');
+  self:register_slash_action('rage', 'on_slash_rage', '|cffffff00<> <value>|r Disable shifting if rage is above/below value');
+  --self:register_slash_action('focus', 'on_slash_focus', '|cffffff00<> <value>|r Disable shifting if focus is above/below value');
+  self:register_slash_action('energy', 'on_slash_energy', '|cffffff00<> <value>|r Disable shifting if energy is above/below value');
+  --self:register_slash_action('combo', 'on_slash_combo', '|cffffff00<> <value>|r Disable shifting if combo points is above/below value');
+  self:register_slash_action('!snare', 'off_slash_snare', 'Enable shifting if snared (and not stunned)');
+  self:register_slash_action('!proc', 'off_slash_pred', 'Enable shifting if Predator\'s Swiftness has procced');
+  self:register_slash_action('!int', 'off_slash_int', 'Enable shifting if enemy is casting/interuptable');
+  --self:register_slash_action('!hot', 'on_slash_hot', 'Enable shifting if you are missing Rejuvenation');
+  self:register_slash_action('on', 'on_slash_on', 'Set shifting to off');
+  self:register_slash_action('off', 'on_slash_off', 'Reset shifting to on');
   self:register_slash_action('debug', 'on_slash_debug', 'Enable or disable debugging output');
   self:set_macro(null, null);
 end
@@ -299,7 +299,7 @@ function NoShift:is_snared()
   return false;
 end
 
-function NoShift:on_slash_snare()
+function NoShift:off_slash_snare()
   if (self:is_gcd() or self:is_stunned()) then
     self:deactivate();
     return;
@@ -310,7 +310,7 @@ function NoShift:on_slash_snare()
   end
 end
 
-function NoShift:on_slash_pred()
+function NoShift:off_slash_pred()
   if (self:is_gcd() or self:is_stunned()) then
     self:deactivate();
     return;
@@ -321,7 +321,7 @@ function NoShift:on_slash_pred()
   end
 end
 
-function NoShift:on_slash_int()
+function NoShift:off_slash_int()
   if (self:is_gcd() or self:is_stunned()) then
     self:deactivate();
     return;
