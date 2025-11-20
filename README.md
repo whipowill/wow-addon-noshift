@@ -4,7 +4,7 @@ An addon for World of Warcraft v3.3.5 to assist w/ Druid powershifting macros.
 
 ## Problem
 
-There is an internal console variable called ``AutoUnshift`` which governs if the game will let you automatically unshift when you cast certain spells.  When crafting Druid macros there are times when we want to disable ``AutoUnshift`` to prevent yourself from shifting.  This addon provides some helpful macro commands to assist in this decision making process.
+There is an internal console variable called ``AutoUnshift`` which governs if the game will let you change forms or not.  When crafting Druid macros there are times when we want to disable this to prevent shifting.
 
 ## Usage
 
