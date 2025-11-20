@@ -39,7 +39,7 @@ For shifting between cat and bear while regenerating energy:
 /stopmacro [mounted] [stealth] [nocombat] [noform]
 /ns energy < 90     <-- if energy is less than 90%, shifting is disabled
 /ns rage > 15       <-- if rage is more than 15%, shifting is disabled
-/ns off snare       <-- if snared, shifting is enabled
+/ns !snare       <-- if snared, shifting is enabled
 /cast [form:1] !Cat Form
 /ns off				<-- restore default, shifting is enabled
 /stopmacro [noform:3]
@@ -58,11 +58,9 @@ For breaking form to use [Predator's Swiftness](https://www.wowhead.com/wotlk/sp
 /ns on 				<-- shifting is disabled
 /ns !proc           <-- if procced, shifting is enabled
 /ns health > 90     <-- if health is more than 90%, shifting is disabled
-/cast [@player] Regrowth
+/cast [@player] Healing Touch
 /ns off				<-- restore default, shifting is enabled
 ```
-
-**This sadly does not work in WOTLK, bc you can't cast Regrowth while in form.**
 
 ## Notes
 
